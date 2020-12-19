@@ -44,7 +44,7 @@ app.engine('hbs', hbs({
 app.set('view engine', 'hbs');
 
 app.get("/", function(req, res){
-    res.render("upload.hbs")
+    res.redirect("/upload")
  })
 
  let fileTable = []
@@ -54,6 +54,9 @@ app.get("/", function(req, res){
 
  app.get("/info", function(req, res){
   res.render("info.hbs")
+})
+app.get("/upload", function(req, res){
+  res.render("upload.hbs")
 })
 
  app.get("/info/:id", function(req, res){
@@ -69,7 +72,7 @@ app.get("/", function(req, res){
    })
 
 let index = 1
- app.post("/upload", (req, res) => {
+ app.post("/handleUpload", (req, res) => {
     let form = new formidable.IncomingForm();
     form.uploadDir = __dirname + '/static/upload/'       
     form.keepExtensions = true                           
