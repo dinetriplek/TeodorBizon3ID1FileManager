@@ -1,10 +1,15 @@
 <table>
     <tr>
-        {{#each this.[1]}}
-        <td class="header-column">{{this}}</td>
-        {{/each}}
+        <td class="header-column">id</td>
+        <td class="header-column">image</td>
+        <td class="header-column">name</td>
+        <td class="header-column">type</td>
+        <td class="header-column">size</td>
+        <td class="header-column">-</td>
+        <td class="header-column">-</td>
+        <td class="header-column">-</td>
     </tr>
-    {{#each this.[0]}}
+    {{#each fileTable}}
     <tr>{{> file}}</tr>
     {{/each}}
 </table>

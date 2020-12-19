@@ -1,7 +1,7 @@
 {
   "name": "teodorbizon3id1filemanager",
   "version": "1.0.0",
-  "description": "prosty file manager na potrzeby aplikacji klienckich",
+  "description": "file uploader dla kozakuw",
   "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -13,6 +13,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Teodor Bizon 3ID1",
+  "author": "TeodorBizon3id1",
   "license": "ISC"
 }

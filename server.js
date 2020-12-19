@@ -49,10 +49,9 @@ app.get("/", function(req, res){
     res.render("upload.hbs")
  })
 
- let fileTable = [], columns = ["id", "image", "name", "type", "size", "", "", ""]
+ let fileTable = []
  app.get("/fileManager", function(req, res){
-    content = [fileTable,columns]
-    res.render("fileManager.hbs",content)
+    res.render("fileManager.hbs",{ fileTable })
  })
 
  app.get("/info", function(req, res){
@@ -63,53 +62,37 @@ app.get("/", function(req, res){
    if(req.params.id == "0"){
      res.render("info.hbs", ["",false])
    } else {
-     for(var i=0;i<fileTable.length;i++){
-       if(fileTable[i].id == req.params.id){
-         var obj = fileTable[i]
-       }
+       fileTable.forEach((element) => {
+         if (element.id == req.params.id) {
+          res.render("info.hbs", [element, true])
+         }
+       })
      }
-     res.render("info.hbs", [obj, true])
-   }
- })
+   })
 
 let index = 1
- app.post("/upload", function(req, res){
+ app.post("/upload", (req, res) => {
     let form = new formidable.IncomingForm();
     form.uploadDir = __dirname + '/static/upload/'       
     form.keepExtensions = true                           
-    form.multiples = true                                
-    form.parse(req, function (err, fields, files) {
+    form.multiples = true
+
+    form.parse(req, (err, fields, files) => {
       if (err) {
         console.log(err)
         return
       }
-       if(Array.isArray(files.files)){
-         for(var i=0; i<files.files.length;i++){
-            var obj = {}
-            obj.id = index
-            obj.name = files.files[i].name
-            obj.path = files.files[i].path
-            obj.size = files.files[i].size
-            obj.type = files.files[i].type
-            obj.genname = path.basename(files.files[i].path)
-            obj.save_date = files.files[i].lastModifiedDate
-            fileTable.push(obj)
-            index++
-         }
-       } else {
-         var obj = {}
-         obj.id = index
-         obj.name = files.files.name
-         obj.path = files.files.path
-         obj.size = files.files.size
-         obj.type = files.files.type
-         obj.genname = path.basename(files.files.path)
-         obj.save_date = files.files.lastModifiedDate
-         fileTable.push(obj)
-         index++
+       if(Array.isArray(files.fileToUpload)){
+         files.fileToUpload.forEach((element) => {
+          fileTable.push({ id: index, name: element.name, path: element.path, size: element.size, type: element.type, genname: path.basename(element.path), save_date: element.lastModifiedDate  })
+          index++
+         })
        }
+       else {
+        fileTable.push({ id: index, name: files.fileToUpload.name, path: files.fileToUpload.path, size: files.fileToUpload.size, type: files.fileToUpload.type, genname: path.basename(files.fileToUpload.path), save_date: files.fileToUpload.lastModifiedDate  })
+        index++    
+      }
     });
-
    res.redirect("/")
  })
 
