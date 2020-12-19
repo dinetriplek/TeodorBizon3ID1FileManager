@@ -1,13 +1,11 @@
 const express = require("express")
 const path = require("path")
-const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 3000;
 const app = express()
 const hbs = require('express-handlebars')
 const formidable = require('formidable');
 
 app.use(express.static('static'))
-app.use(bodyParser.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));       
 app.engine('hbs', hbs({
     defaultLayout: 'main.hbs',
