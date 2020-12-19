@@ -85,16 +85,16 @@ let index = 1
       }
        if(Array.isArray(files.fileToUpload)){
          files.fileToUpload.forEach((element) => {
-          fileTable.push({ id: index, name: element.name, path: element.path, size: element.size, type: element.type, genname: path.basename(element.path), save_date: element.lastModifiedDate  })
-          index++
+          fileTable.push({ id: index, name: element.name, path: element.path, size: element.size, type: element.type, genname: path.basename(element.path), save_date: new Date().getTime()})
+          index++;
          })
        }
        else {
-        fileTable.push({ id: index, name: files.fileToUpload.name, path: files.fileToUpload.path, size: files.fileToUpload.size, type: files.fileToUpload.type, genname: path.basename(files.fileToUpload.path), save_date: files.fileToUpload.lastModifiedDate  })
-        index++    
+        fileTable.push({ id: index, name: files.fileToUpload.name, path: files.fileToUpload.path, size: files.fileToUpload.size, type: files.fileToUpload.type, genname: path.basename(files.fileToUpload.path), save_date: new Date().getTime()})
+        index++;  
       }
+      res.redirect("/fileManager")
     });
-   res.redirect("/")
  })
 
  app.post("/delete/:id", function(req,res){
